@@ -1,0 +1,54 @@
+@import './variables.scss';
+@import './script.scss';
+@import './tabs-component.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+.form-error {
+  background: #e74c3c;
+  color: white;
+  padding: 0.5em;
+  margin: .5em 0;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+};
+
+
+.btn {
+  background: $darkorange;
+  border: none;
+  outline: none;
+  padding: .5em;
+  color: white;
+  border-radius: $radius;
+  text-decoration: none;
+  font-size: 13px;
+  margin: 0 .2em;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid white;
+  }
+
+  i {
+    margin-right: .2em;
+  }
+}
+
+.text-red {
+  color: $red;
+}
+
+.bg-red {
+  background: $red;
+}

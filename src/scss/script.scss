@@ -1,0 +1,58 @@
+.script {
+  font-family: monospace;
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 14px;
+  }
+
+  h2, h3 {
+    font-size: 16px;
+  }
+  h2 {
+    text-align: right;
+    align-self: flex-end;
+  }
+
+  h3 {
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .dialogue {
+    align-self: center;
+    text-align: center;
+  }
+  .dual-dialogue {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+
+    .dialogue {
+      margin: 0 2em;
+    }
+  }
+
+  p {
+    width: 100%;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .centered {
+    text-align: center;
+  }
+}
