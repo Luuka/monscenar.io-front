@@ -5,11 +5,11 @@
         <h1>MonScenar.io</h1>
       </div>
 
-      <div class="user-menu">
+      <div class="user-menu--horizontal">
         <img src="../assets/UserProfile.svg" alt="">
-        <span class="user-menu__name">Hello {{ user.username }}</span>
+        <span class="user-menu--horizontal__name">Hello {{ user.username }}</span>
         <i class="fas fa-caret-down"></i>
-        <div class="user-menu__dropdown">
+        <div class="user-menu--horizontal__dropdown">
           <ul>
             <li>
               <router-link :to="{name: 'Logout'}">Se déconnecter</router-link>
@@ -90,73 +90,6 @@ export default {
 </script>
 
 <style lang='scss' scoped='true'>
-.topbar {
-  background: $orange;
-  height: 4em;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0 1em;
-}
-
-h1 {
-  color: white;
-  margin: 0;
-}
-
-.user-menu {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-
-  transition: $transition;
-
-  &__name {
-    font-weight: bold;
-    color: white;
-    font-size: 1.2em;
-    margin-left: .2em;
-  }
-
-  a {
-    text-decoration: none;
-    color: black;
-  }
-
-  img {
-    width: 20%;
-  }
-
-  i {
-    color: white;
-    margin-left: .5em;
-  }
-
-  &:hover &__dropdown {
-    display: block;
-  }
-
-  &__dropdown {
-    position: absolute;
-    display: none;
-    top: 98%;
-    right: 0;
-    background: white;
-    box-shadow: $shadow;
-    padding: .3em 1em;
-
-    ul, li {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-  }
-}
-
 section[role=main] {
   padding: 1em;
   text-align: left;
@@ -168,7 +101,6 @@ section[role=main] {
 }
 
 .projects {
-
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

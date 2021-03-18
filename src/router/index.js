@@ -18,6 +18,21 @@ const routes = [
     component: () => import('../views/Logout.vue')
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: () => import('../views/ForgotPassword.vue')
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: () => import('../views/ResetPassword.vue')
+  },
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue')
@@ -31,6 +46,11 @@ const routes = [
     path: '/preview/:projectId',
     name: 'Preview',
     component: () => import('../views/Preview.vue')
+  },
+  {
+    path: '/preview/:projectId/version/:versionNumber',
+    name: 'VersionPreview',
+    component: () => import('../views/VersionPreview.vue')
   }
 ]
 
@@ -44,17 +64,19 @@ router.beforeEach((to, from, next) => {
 
   let userService = new UserService(Store);
 
+  let DMZRoutes = ['Home', 'ForgotPassword', 'ResetPassword', 'Register'];
+
   let isLogged = userService.getUser() !== null && userService.getUser().username !== undefined;
-  let isToHome = to.name === 'Home';
+  let isToDMZ = DMZRoutes.includes(to.name);
 
   if(!isLogged) {
-    if(isToHome) {
+    if(isToDMZ) {
       next();
     } else {
       router.push('');
     }
   } else {
-    if(isToHome) {
+    if(isToDMZ) {
       router.push('Dashboard');
     } else {
       next();

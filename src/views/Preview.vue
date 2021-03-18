@@ -1,7 +1,7 @@
 <template>
   <div class="preview">
     <loader v-if="displayLoader"></loader>
-    <header class="topbar">
+    <header class="topbar topbar__notab">
       <div class="topbar__left">
         <div class="topbar__left--top">
           <router-link :to="{ name: 'Editor', params: { projectId: project.id }}">
@@ -125,70 +125,6 @@ export default {
 </script>
 
 <style lang='scss' scoped='true'>
-
-
-.topbar {
-  background: $orange;
-  height: 4em;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1em;
-
-
-  &__button {
-    background: $darkorange;
-    border: none;
-    outline: none;
-    padding: .5em;
-    color: white;
-    border-radius: $radius;
-    cursor: pointer;
-
-    i {
-      margin-right: .2em;
-    }
-  }
-
-  &__left {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-
-    h1 {
-      color: white;
-      margin: 0;
-      font-size: 1.5em;
-    }
-
-    &--top {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-    }
-
-    &--bottom {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    i {
-      font-size: 1.3em;
-      margin-right: .3em;
-    }
-  }
-
-  a {
-    color: white;
-  }
-}
 
 [role=main] {
   display: flex;

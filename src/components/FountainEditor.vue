@@ -52,6 +52,7 @@ export default {
       fountain.parse(this.fountainText, true, function (result){
         if (result.html !== undefined) {
           self.fountainHtml = result.html;
+
         }
       });
     }
@@ -69,10 +70,6 @@ export default {
         fountain.parse(this.fountainText, true, function (result){
           if (result.html !== undefined) {
             self.fountainHtml = result.html;
-
-            let actorService = new ActorService();
-            let actors = actorService.parseTokens(result.tokens);
-            console.log(actors);
           }
         });
       } else {
@@ -159,7 +156,7 @@ export default {
       this.triggerEditorChange();
     },
     onTransition() {
-      this.insertTextAtSelection('\r\n\r\nTRANSITION TO: \r\n\r\n');
+      this.insertTextAtSelection('\r\n>');
       this.triggerEditorChange();
     },
     insertTextAtSelection(text) {
@@ -171,6 +168,9 @@ export default {
       let after = textarea.value.slice(textarea.selectionStart, textarea.value.length);
 
       this.$refs.editor.value = [before, text , after].join('');
+
+      this.$refs.editor.focus();
+      this.$refs.editor.selectionEnd = start+(text.length+1)-(text.length/2);
     },
     applyTextStyle(tag, endTag = null){
 

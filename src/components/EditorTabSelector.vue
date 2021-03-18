@@ -52,7 +52,6 @@ export default {
   },
   data: function () {
     return {
-      current: 0,
       apiService: null,
       idToDelete: null,
       idxToDelete: null,
@@ -68,7 +67,6 @@ export default {
     },
     onDrag(e) {
       e.dataTransfer.dropEffect = 'move';
-      console.log(e);
     },
     onCreateSequence() {
       let self = this;
@@ -174,6 +172,7 @@ export default {
     background: white;
     color: $darkorange;
     width: auto;
+    min-width: 100px;
 
     position: relative;
 

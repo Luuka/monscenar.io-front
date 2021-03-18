@@ -1,0 +1,92 @@
+.topbar {
+  background: $orange;
+  height: 4em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1em;
+
+  &__notab .topbar__left {
+    justify-content: center;
+  }
+
+  h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  &__button {
+    background: $darkorange;
+    border: none;
+    outline: none;
+    padding: .5em;
+    color: white;
+    border-radius: $radius;
+    text-decoration: none;
+    font-size: 13px;
+    margin: 0 .2em;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: $transition;
+
+    &:hover {
+      border: 1px solid white;
+    }
+
+    i {
+      margin-right: .2em;
+    }
+  }
+
+  &__left {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &--top {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: .1em;
+    }
+
+    &--bottom {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    i {
+      font-size: 1.1em;
+      margin-right: .3em;
+    }
+  }
+
+  a {
+    color: white;
+  }
+
+  &__title {
+    height: 100%;
+
+    input {
+      background: $orange;
+      border: 2px solid $orange;
+      font-size: 1.3em;
+      color: white;
+      font-weight: bold;
+      border-radius: $radius;
+
+      &:focus {
+        outline: none;
+        border: 2px solid white;
+      }
+    }
+  }
+}

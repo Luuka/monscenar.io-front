@@ -16,7 +16,7 @@ export default class ApiService {
         ).then(function (response) {
 
             if (response.status === 403 || response.status === 404) {
-                window.location = '/';
+               // window.location = '/';
             }
 
             return response.text();

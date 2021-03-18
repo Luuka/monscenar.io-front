@@ -1,26 +1,25 @@
 <template>
   <div class="login">
-    <h1>MonScenar.io</h1>
+    <h1><router-link :to="{name: 'Home'}">MonScenar.io</router-link></h1>
     <div class="login-form">
 
       <div v-for="(error, key) of errors" v-bind:key="key" class="form-error">
         {{ error }}
       </div>
 
+      <div v-for="(message, key) of messages" v-bind:key="key" class="form-info">
+        {{ message }}
+      </div>
+
+      <p>
+        Pour récupérer l'accès à votre compte, un email contenant un lien pour réinitialiser votre mot de passe vous sera envoyé.
+      </p>
+
       <form action="" @submit="onSubmit">
-        <label for="username">Nom d'utilisateur</label>
-        <input type="text" id="username" name="username">
+        <label for="email">Adresse Email</label>
+        <input type="email" id="email" name="email">
 
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" name="password">
-
-        <router-link :to="{name: 'Register'}">
-          Créer un compte
-        </router-link>
-        <router-link :to="{name: 'ForgotPassword'}">
-          Mot de passe oublié ?
-        </router-link>
-        <input type="submit" value="Se connecter">
+        <input type="submit" value="Envoyer le lien">
       </form>
     </div>
   </div>
@@ -28,7 +27,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'ForgotPassword',
   components: {
 
   },
@@ -37,7 +36,8 @@ export default {
   },
   data: function () {
     return {
-      errors: []
+      errors: [],
+      messages: [],
     }
   },
   methods: {
@@ -51,14 +51,14 @@ export default {
       formData.forEach((value, key) => object[key] = value);
       var json = JSON.stringify(object);
 
-      this.sendLoginRequest(json);
+      this.sendForgotPasswordRequest(json);
 
     },
-    sendLoginRequest: function (json) {
+    sendForgotPasswordRequest: function (json) {
 
       let self = this;
 
-      fetch(process.env.VUE_APP_API_URL+'/login',
+      fetch(process.env.VUE_APP_API_URL+'/forgot-password',
         {
           method: "POST",
           headers: new Headers({'content-type': 'application/json'}),
@@ -69,15 +69,10 @@ export default {
         return response.text();
       })
       .then(function(response) {
-        let loginResponse = JSON.parse(response);
+        let forgotResponse = JSON.parse(response);
 
-        if(loginResponse.status === 200) {
-          self.$store.commit('setUser', loginResponse.user);
-          self.$store.commit('setAuthToken', loginResponse.token);
-          self.$router.push('dashboard');
-
-        } else {
-          self.errors.push(loginResponse.message);
+        if(forgotResponse.status === 200) {
+          self.messages.push("Le lien a été envoyé à votre adresse email");
         }
       });
     }

@@ -1,0 +1,10 @@
+.editor-tabs {
+  width: calc(100vw - 5em);
+}
+
+.editor-tab {
+  display: none;
+  &--current {
+    display: block;
+  }
+}

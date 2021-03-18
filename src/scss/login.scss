@@ -1,0 +1,60 @@
+.login {
+  background: #F6F6F6;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: url('~@/assets/LoginBackground.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  a {
+    color: $darkblue;
+    text-decoration: none;
+  }
+  font-size: 3rem;
+}
+
+.login-form {
+  width: 20em;
+  background: white;
+  padding: 2em;
+  text-align: left;
+  border-radius: $radius;
+  box-shadow: $shadow;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: .1rem;
+  }
+
+  input {
+    margin-bottom: 1em;
+    height: 2.2em;
+    font-size: 1.3em;
+    padding-left: .4em;
+    border: .2rem solid $orange;
+    border-radius: $radius;
+    box-shadow: $shadow;
+
+    &[type=submit] {
+      height: 3em;
+      color: $orange;
+      margin-top: .5em;
+      margin-bottom: 0;
+      background: white;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+}

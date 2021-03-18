@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-wrapper">
+  <div class="modal-wrapper" v-if="isOpen === true">
     <section class="modal" v-if="isOpen === true">
       <div class="close" v-on:click="closeModal()"><i class="fas fa-times"></i></div>
       <div class="content">
@@ -58,6 +58,14 @@ export default {
   z-index: 9999;
   border-radius: $radius;
   padding: 1em;
+
+  &-wrapper {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+  }
 }
 
 .close {

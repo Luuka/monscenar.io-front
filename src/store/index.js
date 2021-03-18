@@ -10,7 +10,8 @@ export default new Vuex.Store({
     projects: [],
     currentProject: {},
     sequences: [],
-    editorCurrentTab: 0
+    editorCurrentTab: 0,
+    versions: []
   },
   mutations: {
     setUser (state, payload) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     setCurrentProject(state, payload) {
       state.currentProject = payload;
+    },
+    setVersions(state, payload) {
+      state.versions = payload;
     }
   },
   actions: {

@@ -3,7 +3,6 @@
     <modal id="delete-project-confirm">
         <div class="delete-project-confirm__content">
          <i class="fas fa-exclamation-triangle text-red "></i>Supprimer le projet est irréversible.
-
           <div>
             <button class="btn bg-red" v-on:click="onConfirmDeleteProject">Supprimer</button>
           </div>
@@ -35,6 +34,10 @@
           <i class="fas fa-glasses"></i> Mode lecture
         </router-link>
 
+        <button class="topbar__button" style="text-decoration: line-through" v-on:click="onFreeze()">
+          <i class="fas fa-tag"></i> Figer une version
+        </button>
+
         <button v-on:click="onDeleteProject" class="topbar__button">
           <i class="fas fa-trash"></i> Supprimer
         </button>
@@ -42,11 +45,21 @@
     </header>
     <section role="main">
       <aside class="sidebar">
-        <div></div>
-        <div class="user-menu">
+        <sidebar-panel>
+          <template slot="actors" style="padding: 1em;">
+            <actors-table></actors-table>
+          </template>
+          <template slot="scenes">
+            <scenes-table></scenes-table>
+          </template>
+          <template slot="versions">
+            <versions-table :project="project"></versions-table>
+          </template>
+        </sidebar-panel>
+        <div class="user-menu--vertical">
           <img src="../assets/UserProfile.svg" alt="">
           <i class="fas fa-caret-down"></i>
-          <div class="user-menu__dropdown">
+          <div class="user-menu--vertical__dropdown">
             <ul>
               <li>
                 <router-link :to="{name: 'Logout'}">Se déconnecter</router-link>
@@ -74,6 +87,10 @@ import EditorTabSelector from "@/components/EditorTabSelector";
 import Loader from "@/components/Loader";
 import ApiService from "@/services/ApiService";
 import Modal from "@/components/Modal";
+import SidebarPanel from "@/components/SidebarPanel";
+import ActorsTable from "@/components/ActorsTable";
+import ScenesTable from "@/components/ScenesTable";
+import VersionsTable from "@/components/VersionsTable";
 
 export default {
   name: 'Editor',
@@ -81,7 +98,11 @@ export default {
     FountainEditor,
     EditorTabSelector,
     Loader,
-    Modal
+    Modal,
+    SidebarPanel,
+    ActorsTable,
+    ScenesTable,
+    VersionsTable
   },
   created() {
     let self = this;
@@ -101,6 +122,10 @@ export default {
     this.apiService.sendRequest('/project/' + this.id, 'GET').then(function (response){
       self.$store.commit('setCurrentProject', JSON.parse(response));
       self.loadSequences();
+    });
+
+    this.apiService.sendRequest('/project/' + this.id+'/versions', 'GET').then(function (response){
+      self.$store.commit('setVersions', JSON.parse(response));
     });
   },
   beforeDestroy() {
@@ -187,93 +212,28 @@ export default {
       ).then(function (response){
         window.location = '/dashboard';
       });
+    },
+    onFreeze(){
+      let self = this;
+
+      let fountainText = '';
+      this.sequences.forEach((sequence) => {
+        fountainText += sequence.fountainText+'\r\n';
+      })
+
+      this.apiService.sendRequest(
+          '/project/'+this.project.id+'/version',
+          'POST',
+          fountainText
+      ).then(function (response){
+        self.$store.commit('setVersions', JSON.parse(response));
+      });
     }
   }
 }
 </script>
 
 <style lang='scss' scoped='true'>
-.topbar {
-  background: $orange;
-  height: 4em;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1em;
-
-
-  &__button {
-    background: $darkorange;
-    border: none;
-    outline: none;
-    padding: .5em;
-    color: white;
-    border-radius: $radius;
-    text-decoration: none;
-    font-size: 13px;
-    margin: 0 .2em;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: $transition;
-
-    &:hover {
-      border: 1px solid white;
-    }
-
-    i {
-      margin-right: .2em;
-    }
-  }
-
-  &__left {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-
-    &--top {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      margin-top: .1em;
-    }
-
-    &--bottom {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    i {
-      font-size: 1.1em;
-      margin-right: .3em;
-    }
-  }
-
-  a {
-    color: white;
-  }
-
-  .topbar__title input {
-    background: $orange;
-    border: 2px solid $orange;
-    font-size: 1.3em;
-    color: white;
-    font-weight: bold;
-    border-radius: $radius;
-
-    &:focus {
-      outline: none;
-      border: 2px solid white;
-    }
-  }
-}
-
 h1 {
   color: white;
   margin: 0;
@@ -283,85 +243,6 @@ h1 {
   display: flex;
   flex-direction: row;
 }
-
-.sidebar {
-  width: 5em;
-  height: calc(100vh - 4em);
-  background: white;
-  box-shadow: $shadow;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.user-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-
-  &__name {
-    font-weight: bold;
-    color: white;
-    font-size: 1.2em;
-    margin-left: .2em;
-  }
-
-  a {
-    text-decoration: none;
-    color: black;
-  }
-
-  img {
-    width: 80%;
-  }
-
-  i {
-    color: white;
-    margin-left: .5em;
-  }
-
-  &:hover &__dropdown {
-    display: block;
-  }
-
-  &__dropdown {
-    position: absolute;
-    display: none;
-    left: 100%;
-    right: 0;
-    background: white;
-    box-shadow: $shadow;
-    padding: .3em 1em;
-    width: calc(101% + 2em);
-    box-sizing: content-box;
-
-    ul, li {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-  }
-}
-
-.editor-tabs {
-  width: calc(100vw - 5em);
-}
-
-.editor-tab {
-  display: none;
-  &--current {
-    display: block;
-  }
-}
-
-i.fa-spinner {
-  animation: rotating 2s linear infinite;
-}
-
 
 .delete-project-confirm__content {
   i {
